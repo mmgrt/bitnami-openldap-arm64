@@ -1,15 +1,20 @@
 bitnami-openldap-arm64
 
-TL;DR 
+TL;DR
 
 `bitnami/openldap` that runs on arm64-based CPUs such as Raspberry Pi.
----------------------------------------------------------------------------------------------------------
+
+---
+
 
 >Not affiliated with Bitnami.
 
 >Use at your own risk, no guarantee provided.
 
 >⚠️ Don't use on production unless you know what you are doing!
+
+
+---
 
 
 This image is based on `bitnami/openldap` [Docker Hub](https://hub.docker.com/r/bitnami/openldap/) | [Github](https://github.com/bitnami/containers/tree/main/bitnami/openldap)
@@ -23,6 +28,7 @@ As there is no official support yet for arm64 (see: https://github.com/bitnami/b
 - Modify `bitnami/openldap`s Dockerfile
 - Deploy the modified image to a pi
 
+---
 
 # Contribute
 Contributions are needed especially given the vast options OpenLDAP offers
@@ -33,6 +39,8 @@ If you still facing issues, you can create an issue with label `help-needed` and
 Use this as a last resort, search your favorite engine and read the manual instead.
 
 ---
+
+# Start
 
 > Note: I used my Pi to compile the source, so I didn't need extra setup for targeting arm64.
 
