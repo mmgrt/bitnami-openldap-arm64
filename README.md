@@ -7,7 +7,7 @@ TL;DR
 
 >Not affiliated with Bitnami.
 
->Use at own risk, no gurantes provided.
+>Use at own risk, no guarantee provided.
 
 >⚠️ Don't use on production unless you know what are doing!
 
@@ -24,13 +24,13 @@ As there is no official support yet for arm64 (see: https://github.com/bitnami/b
 
 
 # Contribute
-Contributions are needed espicially given the vast options OpenLDAP offers
+Contributions are needed especially given the vast options OpenLDAP offers
 If you had an issue, and fixed it: please feel free to open a pull request, if you're lazy, just create an issue with label `solved-issue` describing what you needed to do in order to fix it/ mention any resources you used.
 
 If you still facing issues, you can create an issue with label `help-needed` and hope for the best :D 
-Use this as a last resort, search your favourite engine and read the manual instead.
+Use this as a last resort, search your favorite engine and read the manual instead.
 
-> Note: I used my Pi to compile the source, so I didn't need extra setup for targetting arm64.
+> Note: I used my Pi to compile the source, so I didn't need extra setup for targeting arm64.
 
 
 It's a good idea now to visit: https://www.openldap.org/doc/
@@ -93,14 +93,14 @@ Read through the displayed options and take a note of what you need for your ins
 
 #### Some important args MUST pass to `configure`:
 
-- `--prefix=/opt/bitnami/openldap` sets the installation output to `/opt/bitnami/openldap` (Required, litral)
-> ⚠️ --prefix=/opt/bitnami/openldap is mandatory for this setup, basically the whole software will be installed in `/opt/bitnami/openldap` to be packaged later, this path MUST match the installation path in the cotnainer, which is `/opt/bitnami/openldap` per bitnami image.
+- `--prefix=/opt/bitnami/openldap` sets the installation output to `/opt/bitnami/openldap` (Required, literal)
+> ⚠️ --prefix=/opt/bitnami/openldap is mandatory for this setup, basically the whole software will be installed in `/opt/bitnami/openldap` to be packaged later, this path MUST match the installation path in the container, which is `/opt/bitnami/openldap` per bitnami image.
 > In the configure source I also found that this prefix is being used at runtime to find the slapd.conf file, not setting this correctly will successfully build the image but will cause runtime error: `bind(8): errno=2 (No such file or directory)`
 
-- `CPPFLAGS="-I/opt/bitnami/openldap/include" LDFLAGS="-L/opt/bitnami/openldap/lib -Wl,-rpath,/opt/bitnami/openldap/lib"` sets linker/ compiler flags to include the lib directory (Required, litral)
+- `CPPFLAGS="-I/opt/bitnami/openldap/include" LDFLAGS="-L/opt/bitnami/openldap/lib -Wl,-rpath,/opt/bitnami/openldap/lib"` sets linker/ compiler flags to include the lib directory (Required, literal)
 > ⚠️ Without this flag the binary will fail to locate lib files, and runtime errors such as `libldap-whatever.so.0: cannot open shared object file: No such file or directory` will occur.
 
-- `--enable-modules` is requried if you want to enable modules (Conditional)
+- `--enable-modules` is required if you want to enable modules (Conditional)
 
 
 Note: We maybe should use the original `configure` args used to build the OpenLDAP binary in the bitnami image, but I can't find it..
@@ -113,7 +113,7 @@ The configure command I used for this image is:
 todo: Add SSL!
 todo: Disable un-needed options!
 
-The last message should be `Please "make depend" to build dependencies`, which indicates a successfull build cofiguration.. procceed to the next step
+The last message should be `Please "make depend" to build dependencies`, which indicates a successful build configuration.. proceed to the next step
 
 If `configure` failed, you need to review the errors, usually a module you specified and is not present in the machine, fixable by installing the missing package, consult the manual pages for the requirements in the *Prerequisite software* pages, select your version here: https://www.openldap.org/doc.
 
@@ -125,7 +125,7 @@ As the message suggests, run the command:
  make depend
  ```
 
-Check for any errors/ warnings, you might need to adjust your `configure` command to accomodiate.. 
+Check for any errors/ warnings, you might need to adjust your `configure` command to accommodate.. 
 
 Once done, we're good to build OpenLDAP! 
 
@@ -143,11 +143,11 @@ make test
 ```
 > Check the README file in `/tests` for more about running the tests...
 
-Don't worry about non-cofigured failing tests. 
+Don't worry about non-configured failing tests. 
 
 Finally:
 ```bash
-# Note the use of elevated prevligies
+# Note the use of elevated privileges
 sudo make install
 
 ```
@@ -158,7 +158,7 @@ This will _install_ our binary and it's dependencies to the `--prefix=` folder w
 Now, let's package OpenLDAP to use it in Bitnami's `bitnami/openldap` image.
 For that, we need to match our built binaries paths with the original amd64 package, and provide it for the Dockerfile..
 
-> To check the original package, download it from the originl Dockerfile [find the binary link here](https://github.com/bitnami/containers/blob/main/bitnami/openldap/2.6/debian-11/Dockerfile#L24)
+> To check the original package, download it from the original Dockerfile [find the binary link here](https://github.com/bitnami/containers/blob/main/bitnami/openldap/2.6/debian-11/Dockerfile#L24)
 > Unzip it and examine the folders..
 
 
@@ -252,9 +252,9 @@ cd containers/bitnami/openldap/2.6/debian-11
  
 ### Base image, `gosu`, and $PATH
 
-Let's first apply some important chages to the Dockerfile:
+Let's first apply some important changes to the Dockerfile:
 
-(Chages are presented as diff)
+(Changes are presented as diff)
 
 - Change the base image to use arm64 version instead:
 ```diff
@@ -341,7 +341,7 @@ cp /opt/bitnami/openldap-2.6.3-linux-arm64.tar.gz /src/containers/bitnami/openld
 - Create a directory in `/var/www/html` or any public dir 
 - Place your packaged binary in the created dir
 - Make sure the permissions are correct by giving anyone the ability to read
-- Start your favourite http server in that directory, with external connections allowed, specifying the port
+- Start your favorite http server in that directory, with external connections allowed, specifying the port
 - Take a note of the local IP address and the port
 > todo: details missing
 
@@ -373,7 +373,7 @@ cd /src/containers/bitnami/openldap/2.6/debian-11
 ```
 
 
-To make it simplir to build, make use of existing Makefile, add:
+To make it simpler to build, make use of existing Makefile, add:
 
 ```diff
 + buildx:
@@ -388,12 +388,37 @@ To make it simplir to build, make use of existing Makefile, add:
 > Change to suit your prefs.
 
 > Flag `--push` used to push the image to my registry.
-> Cosult buildx docs on how to load the image after building instead of pushing.
+> Consult buildx docs on how to load the image after building instead of pushing.
 
 > Flag `--platform linux/arm64` specifies the archs.
 > Change to suit your needs.
 
 > Modify `NAME` and `VERSION` to suit your needs.
+
+
+## Modify libopenldap.sh script
+
+We need to make sure that our libs and `slapd` bin paths are exported while setup, this can be done by modifying `libopenldap.sh` file:
+
+```bash
+cd /src/containers/bitnami/openldap/2.6/debian-11/rootfs/opt/bitnami/scripts
+# nano|vi|code|whatever libopenldap.sh
+
+```
+
+Make the following changes within `ldap_env` function:
+
+```diff
+ldap_env() {
+     cat << "EOF"
+# Paths
+...
++export LDAP_LIB_DIR="${LDAP_BASE_DIR}/lib:${LDAP_BASE_DIR}/libexec:${LDAP_BASE_DIR}/libexec/openldap"
+-export PATH="${LDAP_BIN_DIR}:${LDAP_SBIN_DIR}:$PATH"
++export PATH="${LDAP_LIB_DIR}:${LDAP_BIN_DIR}:${LDAP_SBIN_DIR}:$PATH"
+```
+
+> Note: for debugging, you can also export `BITNAMI_DEBUG=true`, and use `LDAP_LOGLEVEL=-1` env in the `docker run` command 
 
 
 ## Build the image!
@@ -403,7 +428,7 @@ To make it simplir to build, make use of existing Makefile, add:
 make buildx
 ```
 
-Take notes of any errors/ warnings you might see, espicially in `RUN install_packages ..` and `RUN /opt/bitnami/scripts/openldap/postunpack.sh` commands...
+Take notes of any errors/ warnings you might see, especially in `RUN install_packages ..` and `RUN /opt/bitnami/scripts/openldap/postunpack.sh` commands...
 
 > For any errors/ issues, check [#Contribute](Contribute)
 
@@ -418,7 +443,7 @@ docker run -d --name openldap -p 1636:1636 -p 1389:1389 -e "LDAP_ROOT=dc=mydomai
 ```
 > Replace tag `docker.io/mghzawi/bitnami-openldap:latest` with the tag you chose earlier..
 
-For more about the env vars you can pass to the container, connsult with the official Bitnami README at [Github](https://github.com/bitnami/containers/tree/main/bitnami/openldap), [Docker Hub](https://hub.docker.com/r/bitnami/openldap/)
+For more about the env vars you can pass to the container, consult with the official Bitnami README at [Github](https://github.com/bitnami/containers/tree/main/bitnami/openldap), [Docker Hub](https://hub.docker.com/r/bitnami/openldap/)
 
 
 check todos
