@@ -16,7 +16,7 @@ This guide explains how to compile OpenLDAP on arm64, and include it in a `bitna
 ---
 
 
-This image is based on `bitnami/openldap` [Docker Hub](https://hub.docker.com/r/bitnami/openldap/) | [Github](https://github.com/bitnami/containers/tree/main/bitnami/openldap)
+`bitnami/openldap` [Docker Hub](https://hub.docker.com/r/bitnami/openldap/) | [Github](https://github.com/bitnami/containers/tree/main/bitnami/openldap)
 
 As there is no official support yet for arm64 (see: https://github.com/bitnami/bitnami-docker-openldap/issues/18, https://github.com/bitnami/charts/issues/7305), I decided to make my own, and document the steps for others and for my future self :)
 
@@ -529,12 +529,12 @@ docker buildx build --progress=plain --no-cache --rm --push --platform linux/arm
 
 > Assuming you have Docker buildx `mybuilder`, you can simply create one by `docker buildx create -name mybuilder`
 >
-> Change `mybuilder` to suit your prefs.
+> Change `mybuilder` to suit your preferences.
 >
 >
 > Added `--progress=plain` to see what errors might occur during scripts running
 >
-> Change to suit your prefs.
+> Change to suit your preferences.
 >
 >
 > Flag `--push` used to push the image to my registry.
@@ -542,7 +542,7 @@ docker buildx build --progress=plain --no-cache --rm --push --platform linux/arm
 > Consult buildx docs on how to load the image after building instead of pushing.
 >
 >
-> Flag `--platform linux/arm64` specifies the archs.
+> Flag `--platform linux/arm64` specifies the architecture.
 >
 > Change to suit your needs.
 >
@@ -560,7 +560,7 @@ Now, you can the use the newly built image tag instead of `bitnami/openldap:late
 
 
 ```bash
-docker run -d --name openldap -p 1636:1636 -p 1389:1389 -e "LDAP_ROOT=dc=mydomain,dc=com" -e LDAP_CONFIG_ADMIN_ENABLED=true -e LDAP_USER_DC=users -e TZ=Asia/Riyadh -e LDAP_ADMIN_USERNAME=admin -e "LDAP_ADMIN_PASSWORD=some-strogn-pass" -e "LDAP_USERS=myuser" -e "LDAP_PASSWORDS=myuser-password" --mount type=bind,src=/openldap,dst=/bitnami/openldap/ docker.io/mghzawi/bitnami-openldap:latest
+docker run -d --name openldap -p 1636:1636 -p 1389:1389 -e "LDAP_ROOT=dc=mydomain,dc=com" -e LDAP_CONFIG_ADMIN_ENABLED=true -e LDAP_USER_DC=users -e TZ=Asia/Riyadh -e LDAP_ADMIN_USERNAME=admin -e "LDAP_ADMIN_PASSWORD=some-strong-pass" -e "LDAP_USERS=myuser" -e "LDAP_PASSWORDS=myuser-password" --mount type=bind,src=/openldap,dst=/bitnami/openldap/ docker.io/mghzawi/bitnami-openldap:latest
 ```
 > Replace tag `docker.io/mghzawi/bitnami-openldap:latest` with the tag you chose earlier..
 
