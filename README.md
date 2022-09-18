@@ -1,4 +1,4 @@
-bitnami-openldap-arm64
+# bitnami-openldap for arm64
 
 
 This guide explains how to compile OpenLDAP on arm64, and include it in a `bitnami/openldap` image build, that runs on arm64-based CPUs such as Raspberry Pi 4.
